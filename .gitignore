@@ -1,6 +1,10 @@
 # File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,linux
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,linux
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,linux,libreoffice,microsoftoffice
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,linux,libreoffice,microsoftoffice
+
+### LibreOffice ###
+# LibreOffice locks
+.~lock.*#
 
 ### Linux ###
 *~
@@ -16,6 +20,27 @@
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
+
+### MicrosoftOffice ###
+*.tmp
+
+# Word temporary
+~$*.doc*
+
+# Word Auto Backup File
+Backup of *.doc*
+
+# Excel temporary
+~$*.xls*
+
+# Excel Backup File
+*.xlk
+
+# PowerPoint temporary
+~$*.ppt*
+
+# Visio autosave temporary files
+*.~vsd*
 
 ### VisualStudioCode ###
 .vscode/*
@@ -39,7 +64,7 @@
 ### Obsidian ###
 .obsidian/workspace.json
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,linux
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,linux,libreoffice,microsoftoffice
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
 
