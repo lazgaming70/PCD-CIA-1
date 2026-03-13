@@ -1,0 +1,4 @@
+.mermaid svg {
+    max-width: 700px;  /* adjust to taste */
+    height: auto;
+}
