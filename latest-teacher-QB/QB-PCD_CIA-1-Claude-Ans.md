@@ -10,23 +10,23 @@ A compiler translates a high-level source language into a lower-level target lan
 
 #### 2. Define tokens, patterns and lexemes.
 
-|Term|Definition|Example|
-|---|---|---|
-|**Token**|A category representing a class of lexical units|`id`, `num`, `relop`|
-|**Pattern**|A rule (usually a regex) describing all strings that belong to a token|`letter (letter \| digit)*` for `id`|
-|**Lexeme**|The actual character sequence in source code that matches a pattern|`count`, `total`, `x1`|
+| Term        | Definition                                                             | Example                              |
+| ----------- | ---------------------------------------------------------------------- | ------------------------------------ |
+| **Token**   | A category representing a class of lexical units                       | `id`, `num`, `relop`                 |
+| **Pattern** | A rule (usually a regex) describing all strings that belong to a token | `letter (letter \| digit)*` for `id` |
+| **Lexeme**  | The actual character sequence in source code that matches a pattern    | `count`, `total`, `x1`               |
 
 ---
 
 #### 3. Differentiate bottom-up and top-down parsers with an example.
 
-|Feature|Top-Down|Bottom-Up|
-|---|---|---|
-|Build direction|Root to leaves|Leaves to root|
-|Strategy|Predict then match|Shift then reduce|
-|Typical methods|Recursive descent, LL(1)|SLR, CLR, LALR|
-|Grammar class|LL grammars|LR grammars (more powerful)|
-|Left recursion|Cannot handle directly|Handles naturally|
+| Feature         | Top-Down                 | Bottom-Up                   |
+| --------------- | ------------------------ | --------------------------- |
+| Build direction | Root to leaves           | Leaves to root              |
+| Strategy        | Predict then match       | Shift then reduce           |
+| Typical methods | Recursive descent, LL(1) | SLR, CLR, LALR              |
+| Grammar class   | LL grammars              | LR grammars (more powerful) |
+| Left recursion  | Cannot handle directly   | Handles naturally           |
 
 **Example:** For `id+id`, top-down predicts `E -> T + E` and tries to match; bottom-up shifts `id`, reduces to `T`, shifts `+`, and so on.
 
@@ -83,14 +83,14 @@ A **handle** is a substring of a right-sentential form that matches the RHS of s
 
 #### 8. Differentiate NFA and DFA.
 
-|Feature|NFA|DFA|
-|---|---|---|
-|Transitions per state|Multiple (or 0) per symbol|Exactly one per symbol|
-|ε-moves|Allowed|Not allowed|
-|Acceptance condition|Any accepting path|Unique deterministic path|
-|State count|Usually fewer|Can be exponentially more|
-|Simulation|Needs subset tracking|Simple table lookup|
-|Language recognition|Equivalent to DFA|Equivalent to NFA|
+| Feature               | NFA                        | DFA                       |
+| --------------------- | -------------------------- | ------------------------- |
+| Transitions per state | Multiple (or 0) per symbol | Exactly one per symbol    |
+| ε-moves               | Allowed                    | Not allowed               |
+| Acceptance condition  | Any accepting path         | Unique deterministic path |
+| State count           | Usually fewer              | Can be exponentially more |
+| Simulation            | Needs subset tracking      | Simple table lookup       |
+| Language recognition  | Equivalent to DFA          | Equivalent to NFA         |
 
 ---
 
@@ -121,14 +121,14 @@ flowchart TD
 
 #### 11. Differentiate compiler and interpreter.
 
-|Feature|Compiler|Interpreter|
-|---|---|---|
-|Translation|Entire source at once|Statement by statement|
-|Output|Executable object code|No separate object code produced|
-|Execution speed|Faster (pre-compiled)|Slower (translates at runtime)|
-|Error detection|After full compilation|Stops at first encountered error|
-|Memory|More (stores object code)|Less|
-|Examples|GCC (C), javac (Java)|Python, Ruby, Bash|
+| Feature         | Compiler                  | Interpreter                      |
+| --------------- | ------------------------- | -------------------------------- |
+| Translation     | Entire source at once     | Statement by statement           |
+| Output          | Executable object code    | No separate object code produced |
+| Execution speed | Faster (pre-compiled)     | Slower (translates at runtime)   |
+| Error detection | After full compilation    | Stops at first encountered error |
+| Memory          | More (stores object code) | Less                             |
+| Examples        | GCC (C), javac (Java)     | Python, Ruby, Bash               |
 
 ---
 
@@ -270,11 +270,11 @@ Shift-reduce parsing uses a **stack** and an **input buffer**. Two operations:
 
 ##### Productions
 
-|#|Production|
-|---|---|
-|1|E -> E - E|
-|2|E -> E * E|
-|3|E -> id|
+| #   | Production |
+| --- | ---------- |
+| 1   | E -> E - E |
+| 2   | E -> E * E |
+| 3   | E -> id    |
 
 ##### Conflict Analysis
 
@@ -287,19 +287,19 @@ This grammar is **ambiguous**, producing two types of conflict:
 
 ##### Parsing Trace
 
-|Step|Stack|Input|Action|
-|---|---|---|---|
-|1|`$`|`id1 - id2 * id3 $`|Shift|
-|2|`$ id1`|`- id2 * id3 $`|Reduce by rule 3: E -> id|
-|3|`$ E`|`- id2 * id3 $`|Shift|
-|4|`$ E -`|`id2 * id3 $`|Shift|
-|5|`$ E - id2`|`* id3 $`|Reduce by rule 3: E -> id|
-|6|`$ E - E`|`* id3 $`|**Shift** (conflict: shift `*` wins; `*` > `-`)|
-|7|`$ E - E *`|`id3 $`|Shift|
-|8|`$ E - E * id3`|`$`|Reduce by rule 3: E -> id|
-|9|`$ E - E * E`|`$`|Reduce by rule 2: E -> E * E|
-|10|`$ E - E`|`$`|Reduce by rule 1: E -> E - E|
-|11|`$ E`|`$`|**Accept**|
+| Step | Stack           | Input               | Action                                          |
+| ---- | --------------- | ------------------- | ----------------------------------------------- |
+| 1    | `$`             | `id1 - id2 * id3 $` | Shift                                           |
+| 2    | `$ id1`         | `- id2 * id3 $`     | Reduce by rule 3: E -> id                       |
+| 3    | `$ E`           | `- id2 * id3 $`     | Shift                                           |
+| 4    | `$ E -`         | `id2 * id3 $`       | Shift                                           |
+| 5    | `$ E - id2`     | `* id3 $`           | Reduce by rule 3: E -> id                       |
+| 6    | `$ E - E`       | `* id3 $`           | **Shift** (conflict: shift `*` wins; `*` > `-`) |
+| 7    | `$ E - E *`     | `id3 $`             | Shift                                           |
+| 8    | `$ E - E * id3` | `$`                 | Reduce by rule 3: E -> id                       |
+| 9    | `$ E - E * E`   | `$`                 | Reduce by rule 2: E -> E * E                    |
+| 10   | `$ E - E`       | `$`                 | Reduce by rule 1: E -> E - E                    |
+| 11   | `$ E`           | `$`                 | **Accept**                                      |
 
 ##### Result
 
@@ -320,12 +320,12 @@ Type checking verifies that each operation in a program is applied to operands o
 
 Types are represented as **type expressions:**
 
-|Type expression|Meaning|
-|---|---|
-|`int`, `float`, `char`|Basic types|
-|`array(10, int)`|Array of 10 integers|
-|`int -> float`|Function from int to float|
-|`pointer(int)`|Pointer to integer|
+| Type expression        | Meaning                    |
+| ---------------------- | -------------------------- |
+| `int`, `float`, `char` | Basic types                |
+| `array(10, int)`       | Array of 10 integers       |
+| `int -> float`         | Function from int to float |
+| `pointer(int)`         | Pointer to integer         |
 
 ##### Type Inference Rules
 
@@ -343,12 +343,12 @@ float c;
 a = b + c;
 ```
 
-|Step|Expression|Type|Action|
-|---|---|---|---|
-|1|`b`|`int`|Lookup symbol table|
-|2|`c`|`float`|Lookup symbol table|
-|3|`b + c`|`float`|Coerce `b` to `float`; result is `float`|
-|4|`a = float`|-|`a` is `int` - **type mismatch error** (or narrowing coercion, language-dependent)|
+| Step | Expression  | Type    | Action                                                                             |
+| ---- | ----------- | ------- | ---------------------------------------------------------------------------------- |
+| 1    | `b`         | `int`   | Lookup symbol table                                                                |
+| 2    | `c`         | `float` | Lookup symbol table                                                                |
+| 3    | `b + c`     | `float` | Coerce `b` to `float`; result is `float`                                           |
+| 4    | `a = float` | -       | `a` is `int` - **type mismatch error** (or narrowing coercion, language-dependent) |
 
 ##### Example 2 - Function Call Type Checking
 
@@ -358,11 +358,11 @@ int add(int x, int y) { return x + y; }
 add(3, 2.5);   // Type error: 2nd arg is float, expected int
 ```
 
-|Check|Expected|Actual|Result|
-|---|---|---|---|
-|Arg 1 type|`int`|`int`|OK|
-|Arg 2 type|`int`|`float`|**Error**|
-|Return type|`int`|`int`|OK|
+| Check       | Expected | Actual  | Result    |
+| ----------- | -------- | ------- | --------- |
+| Arg 1 type  | `int`    | `int`   | OK        |
+| Arg 2 type  | `int`    | `float` | **Error** |
+| Return type | `int`    | `int`   | OK        |
 
 ##### Type Environment (Symbol Table)
 
@@ -412,15 +412,15 @@ flowchart TD
 
 Scans `a = b + c * 45` and produces tokens:
 
-|Lexeme|Token|Attribute|
-|---|---|---|
-|`a`|`id`|symtab entry for a|
-|`=`|`assign`|-|
-|`b`|`id`|symtab entry for b|
-|`+`|`+`|-|
-|`c`|`id`|symtab entry for c|
-|`*`|`*`|-|
-|`45`|`num`|integer value 45|
+| Lexeme | Token    | Attribute          |
+| ------ | -------- | ------------------ |
+| `a`    | `id`     | symtab entry for a |
+| `=`    | `assign` | -                  |
+| `b`    | `id`     | symtab entry for b |
+| `+`    | `+`      | -                  |
+| `c`    | `id`     | symtab entry for c |
+| `*`    | `*`      | -                  |
+| `45`   | `num`    | integer value 45   |
 
 **Output:** Token stream `id = id + id * num`
 
@@ -482,11 +482,11 @@ MOV  a,  R2     ; store result in a
 
 ##### Symbol Table (maintained throughout)
 
-|Name|Type|Address|
-|---|---|---|
-|a|int|mem[100]|
-|b|int|mem[104]|
-|c|int|mem[108]|
+| Name | Type | Address  |
+| ---- | ---- | -------- |
+| a    | int  | mem[100] |
+| b    | int  | mem[104] |
+| c    | int  | mem[108] |
 
 ---
 
@@ -496,18 +496,18 @@ MOV  a,  R2     ; store result in a
 
 NFA states for `(a|b)*abb`:
 
-|State|On `a`|On `b`|On ε|
-|---|---|---|---|
-|0|-|-|{1, 7}|
-|1|-|-|{2, 4}|
-|2|{3}|-|-|
-|3|-|-|{6}|
-|4|-|{5}|-|
-|5|-|-|{6}|
-|6|-|-|{1, 7}|
-|7|{8}|-|-|
-|8|-|{9}|-|
-|9|-|{10}|-|
+| State | On `a` | On `b` | On ε   |
+| ----- | ------ | ------ | ------ |
+| 0     | -      | -      | {1, 7} |
+| 1     | -      | -      | {2, 4} |
+| 2     | {3}    | -      | -      |
+| 3     | -      | -      | {6}    |
+| 4     | -      | {5}    | -      |
+| 5     | -      | -      | {6}    |
+| 6     | -      | -      | {1, 7} |
+| 7     | {8}    | -      | -      |
+| 8     | -      | {9}    | -      |
+| 9     | -      | {10}   | -      |
 
 State 10 is the accepting state.
 
@@ -515,22 +515,22 @@ State 10 is the accepting state.
 
 Starting from ε-closure({0}):
 
-|DFA State|NFA States|On `a`|On `b`|Accept?|
-|---|---|---|---|---|
-|**A**|{0,1,2,4,7}|B|C|No|
-|**B**|{1,2,3,4,6,7,8}|B|D|No|
-|**C**|{1,2,4,5,6,7}|B|C|No|
-|**D**|{1,2,4,5,6,7,9}|B|E|No|
-|**E**|{1,2,4,5,6,7,10}|B|C|**Yes**|
+| DFA State | NFA States       | On `a` | On `b` | Accept? |
+| --------- | ---------------- | ------ | ------ | ------- |
+| **A**     | {0,1,2,4,7}      | B      | C      | No      |
+| **B**     | {1,2,3,4,6,7,8}  | B      | D      | No      |
+| **C**     | {1,2,4,5,6,7}    | B      | C      | No      |
+| **D**     | {1,2,4,5,6,7,9}  | B      | E      | No      |
+| **E**     | {1,2,4,5,6,7,10} | B      | C      | **Yes** |
 
 ##### Step 3 - Minimization (Hopcroft's Algorithm)
 
-|Round|Partition|Reason|
-|---|---|---|
-|Initial|{E}, {A,B,C,D}|E is the only accepting state|
-|Round 1|{E}, {D}, {A,B,C}|D on `b` goes to E (different group)|
-|Round 2|{E}, {D}, {B}, {A,C}|B on `b` goes to D (different group)|
-|Round 3|No change|A and C have identical transitions: both go to B on `a`, to group {A,C} on `b`|
+| Round   | Partition            | Reason                                                                         |
+| ------- | -------------------- | ------------------------------------------------------------------------------ |
+| Initial | {E}, {A,B,C,D}       | E is the only accepting state                                                  |
+| Round 1 | {E}, {D}, {A,B,C}    | D on `b` goes to E (different group)                                           |
+| Round 2 | {E}, {D}, {B}, {A,C} | B on `b` goes to D (different group)                                           |
+| Round 3 | No change            | A and C have identical transitions: both go to B on `a`, to group {A,C} on `b` |
 
 **Final partition:** `{A,C}`, `{B}`, `{D}`, `{E}` - **4 states**
 
@@ -538,12 +538,12 @@ Starting from ε-closure({0}):
 
 Rename: $q_0 = {A,C}$, $q_1 = B$, $q_2 = D$, $q_3^* = E$
 
-|State|On `a`|On `b`|Accept?|
-|---|---|---|---|
-|**q0** (start)|q1|q0|No|
-|**q1**|q1|q2|No|
-|**q2**|q1|q3|No|
-|**q3***|q1|q0|**Yes**|
+| State          | On `a` | On `b` | Accept? |
+| -------------- | ------ | ------ | ------- |
+| **q0** (start) | q1     | q0     | No      |
+| **q1**         | q1     | q2     | No      |
+| **q2**         | q1     | q3     | No      |
+| **q3***        | q1     | q0     | **Yes** |
 
 ```mermaid
 flowchart LR
@@ -598,29 +598,29 @@ L' -> , S L' | ε
 
 Stack is shown top-first; `$` at bottom is implied.
 
-|Stack (top first)|Input|Action|
-|---|---|---|
-|`S`|`(a,(a,a))$`|S -> (L)|
-|`(L)`|`(a,(a,a))$`|Match `(`|
-|`L)`|`a,(a,a))$`|L -> SL'|
-|`SL')`|`a,(a,a))$`|S -> a|
-|`aL')`|`a,(a,a))$`|Match `a`|
-|`L')`|`,(a,a))$`|L' -> ,SL'|
-|`,SL')`|`,(a,a))$`|Match `,`|
-|`SL')`|`(a,a))$`|S -> (L)|
-|`(L)L')`|`(a,a))$`|Match `(`|
-|`L)L')`|`a,a))$`|L -> SL'|
-|`SL')L')`|`a,a))$`|S -> a|
-|`aL')L')`|`a,a))$`|Match `a`|
-|`L')L')`|`,a))$`|L' -> ,SL'|
-|`,SL')L')`|`,a))$`|Match `,`|
-|`SL')L')`|`a))$`|S -> a|
-|`aL')L')`|`a))$`|Match `a`|
-|`L')L')`|`))$`|L' -> ε|
-|`)L')`|`))$`|Match `)`|
-|`L')`|`)$`|L' -> ε|
-|`)`|`)$`|Match `)`|
-|(empty)|`$`|**Accept**|
+| Stack (top first) | Input        | Action     |
+| ----------------- | ------------ | ---------- |
+| `S`               | `(a,(a,a))$` | S -> (L)   |
+| `(L)`             | `(a,(a,a))$` | Match `(`  |
+| `L)`              | `a,(a,a))$`  | L -> SL'   |
+| `SL')`            | `a,(a,a))$`  | S -> a     |
+| `aL')`            | `a,(a,a))$`  | Match `a`  |
+| `L')`             | `,(a,a))$`   | L' -> ,SL' |
+| `,SL')`           | `,(a,a))$`   | Match `,`  |
+| `SL')`            | `(a,a))$`    | S -> (L)   |
+| `(L)L')`          | `(a,a))$`    | Match `(`  |
+| `L)L')`           | `a,a))$`     | L -> SL'   |
+| `SL')L')`         | `a,a))$`     | S -> a     |
+| `aL')L')`         | `a,a))$`     | Match `a`  |
+| `L')L')`          | `,a))$`      | L' -> ,SL' |
+| `,SL')L')`        | `,a))$`      | Match `,`  |
+| `SL')L')`         | `a))$`       | S -> a     |
+| `aL')L')`         | `a))$`       | Match `a`  |
+| `L')L')`          | `))$`        | L' -> ε    |
+| `)L')`            | `))$`        | Match `)`  |
+| `L')`             | `)$`         | L' -> ε    |
+| `)`               | `)$`         | Match `)`  |
+| (empty)           | `$`          | **Accept** |
 
 ---
 
@@ -640,13 +640,13 @@ $$\text{FOLLOW}(E) = {$,; )}$$ $$\text{FOLLOW}(E') = {$,; )}$$ $$\text{FOLLOW}(T
 
 ##### Step 4 - Predictive Parsing Table
 
-|NT|`id`|`+`|`*`|`(`|`)`|`$`|
-|---|---|---|---|---|---|---|
-|**E**|E->TE'|-|-|E->TE'|-|-|
-|**E'**|-|E'->+TE'|-|-|E'->ε|E'->ε|
-|**T**|T->FT'|-|-|T->FT'|-|-|
-|**T'**|-|T'->ε|T'->*FT'|-|T'->ε|T'->ε|
-|**F**|F->id|-|-|F->(E)|-|-|
+| NT     | `id`   | `+`      | `*`      | `(`    | `)`   | `$`   |
+| ------ | ------ | -------- | -------- | ------ | ----- | ----- |
+| **E**  | E->TE' | -        | -        | E->TE' | -     | -     |
+| **E'** | -      | E'->+TE' | -        | -      | E'->ε | E'->ε |
+| **T**  | T->FT' | -        | -        | T->FT' | -     | -     |
+| **T'** | -      | T'->ε    | T'->*FT' | -      | T'->ε | T'->ε |
+| **F**  | F->id  | -        | -        | F->(E) | -     | -     |
 
 ---
 
@@ -654,15 +654,15 @@ $$\text{FOLLOW}(E) = {$,; )}$$ $$\text{FOLLOW}(E') = {$,; )}$$ $$\text{FOLLOW}(T
 
 ##### Augmented Grammar
 
-|#|Production|
-|---|---|
-|0|E' -> E|
-|1|E -> E + T|
-|2|E -> T|
-|3|T -> T * F|
-|4|T -> F|
-|5|F -> ( E )|
-|6|F -> id|
+| #   | Production |
+| --- | ---------- |
+| 0   | E' -> E    |
+| 1   | E -> E + T |
+| 2   | E -> T     |
+| 3   | T -> T * F |
+| 4   | T -> F     |
+| 5   | F -> ( E ) |
+| 6   | F -> id    |
 
 ##### Step 1 - LR(0) Item Sets
 
@@ -750,29 +750,29 @@ $$\text{FOLLOW}(E) = {+,; ),; $} \qquad \text{FOLLOW}(T) = {+,; *,; ),; $} \qqua
 
 **ACTION** (s = shift, r = reduce by rule #, acc = accept, blank = error)
 
-|State|`id`|`+`|`*`|`(`|`)`|`$`|
-|---|---|---|---|---|---|---|
-|0|s5|-|-|s4|-|-|
-|1|-|s6|-|-|-|acc|
-|2|-|r2|s7|-|r2|r2|
-|3|-|r4|r4|-|r4|r4|
-|4|s5|-|-|s4|-|-|
-|5|-|r6|r6|-|r6|r6|
-|6|s5|-|-|s4|-|-|
-|7|s5|-|-|s4|-|-|
-|8|-|s6|-|-|s11|-|
-|9|-|r1|s7|-|r1|r1|
-|10|-|r3|r3|-|r3|r3|
-|11|-|r5|r5|-|r5|r5|
+| State | `id` | `+` | `*` | `(` | `)` | `$` |
+| ----- | ---- | --- | --- | --- | --- | --- |
+| 0     | s5   | -   | -   | s4  | -   | -   |
+| 1     | -    | s6  | -   | -   | -   | acc |
+| 2     | -    | r2  | s7  | -   | r2  | r2  |
+| 3     | -    | r4  | r4  | -   | r4  | r4  |
+| 4     | s5   | -   | -   | s4  | -   | -   |
+| 5     | -    | r6  | r6  | -   | r6  | r6  |
+| 6     | s5   | -   | -   | s4  | -   | -   |
+| 7     | s5   | -   | -   | s4  | -   | -   |
+| 8     | -    | s6  | -   | -   | s11 | -   |
+| 9     | -    | r1  | s7  | -   | r1  | r1  |
+| 10    | -    | r3  | r3  | -   | r3  | r3  |
+| 11    | -    | r5  | r5  | -   | r5  | r5  |
 
 **GOTO**
 
-|State|E|T|F|
-|---|---|---|---|
-|0|1|2|3|
-|4|8|2|3|
-|6|-|9|3|
-|7|-|-|10|
+| State | E   | T   | F   |
+| ----- | --- | --- | --- |
+| 0     | 1   | 2   | 3   |
+| 4     | 8   | 2   | 3   |
+| 6     | -   | 9   | 3   |
+| 7     | -   | -   | 10  |
 
 ---
 
@@ -835,18 +835,18 @@ _(goto(I3,b) = I4, goto(I3,a) = I3, goto(I6,b) = I7, goto(I6,a) = I6)_
 
 ##### CLR(1) Parsing Table
 
-|State|`a`|`b`|`$`|S|A|
-|---|---|---|---|---|---|
-|0|s3|s4|-|1|2|
-|1|-|-|acc|-|-|
-|2|s6|s7|-|-|5|
-|3|s3|s4|-|-|8|
-|4|r(A->b)|r(A->b)|-|-|-|
-|5|-|-|r(S->AA)|-|-|
-|6|s6|s7|-|-|9|
-|7|-|-|r(A->b)|-|-|
-|8|r(A->aA)|r(A->aA)|-|-|-|
-|9|-|-|r(A->aA)|-|-|
+| State | `a`      | `b`      | `$`      | S   | A   |
+| ----- | -------- | -------- | -------- | --- | --- |
+| 0     | s3       | s4       | -        | 1   | 2   |
+| 1     | -        | -        | acc      | -   | -   |
+| 2     | s6       | s7       | -        | -   | 5   |
+| 3     | s3       | s4       | -        | -   | 8   |
+| 4     | r(A->b)  | r(A->b)  | -        | -   | -   |
+| 5     | -        | -        | r(S->AA) | -   | -   |
+| 6     | s6       | s7       | -        | -   | 9   |
+| 7     | -        | -        | r(A->b)  | -   | -   |
+| 8     | r(A->aA) | r(A->aA) | -        | -   | -   |
+| 9     | -        | -        | r(A->aA) | -   | -   |
 
 ##### Key Insight
 
@@ -879,11 +879,11 @@ A  -> aA | b
 
 ##### Identifying States with the Same Core
 
-|CLR States|LR(0) Core|Lookaheads|Merged State|
-|---|---|---|---|
-|I3, I6|{A->a.A, A->·aA, A->·b}|{a,b} and {$}|**I36** with {a,b,$}|
-|I4, I7|{A->b.}|{a,b} and {$}|**I47** with {a,b,$}|
-|I8, I9|{A->aA.}|{a,b} and {$}|**I89** with {a,b,$}|
+| CLR States | LR(0) Core              | Lookaheads    | Merged State         |
+| ---------- | ----------------------- | ------------- | -------------------- |
+| I3, I6     | {A->a.A, A->·aA, A->·b} | {a,b} and {$} | **I36** with {a,b,$} |
+| I4, I7     | {A->b.}                 | {a,b} and {$} | **I47** with {a,b,$} |
+| I8, I9     | {A->aA.}                | {a,b} and {$} | **I89** with {a,b,$} |
 
 States I0, I1, I2, I5 have unique cores - they remain unchanged.
 
@@ -903,15 +903,15 @@ States I0, I1, I2, I5 have unique cores - they remain unchanged.
 
 ##### LALR Parsing Table
 
-|State|`a`|`b`|`$`|S|A|
-|---|---|---|---|---|---|
-|0|s36|s47|-|1|2|
-|1|-|-|acc|-|-|
-|2|s36|s47|-|-|5|
-|**36**|s36|s47|-|-|89|
-|**47**|r(A->b)|r(A->b)|r(A->b)|-|-|
-|5|-|-|r(S->AA)|-|-|
-|**89**|r(A->aA)|r(A->aA)|r(A->aA)|-|-|
+| State  | `a`      | `b`      | `$`      | S   | A   |
+| ------ | -------- | -------- | -------- | --- | --- |
+| 0      | s36      | s47      | -        | 1   | 2   |
+| 1      | -        | -        | acc      | -   | -   |
+| 2      | s36      | s47      | -        | -   | 5   |
+| **36** | s36      | s47      | -        | -   | 89  |
+| **47** | r(A->b)  | r(A->b)  | r(A->b)  | -   | -   |
+| 5      | -        | -        | r(S->AA) | -   | -   |
+| **89** | r(A->aA) | r(A->aA) | r(A->aA) | -   | -   |
 
 ##### LALR vs CLR vs SLR Summary
 
@@ -951,13 +951,13 @@ lexemeBegin                               forward
 
 Tokens are specified using **regular expressions**. Common examples:
 
-|Token|Regular Expression|
-|---|---|
-|`identifier`|`letter_ (letter_ \| digit)*`|
-|`integer`|`digit+`|
-|`float`|`digit+ . digit*`|
-|`relop`|`< \| > \| <= \| >= \| == \| !=`|
-|`whitespace`|`(blank \| tab \| newline)+`|
+| Token        | Regular Expression               |
+| ------------ | -------------------------------- |
+| `identifier` | `letter_ (letter_ \| digit)*`    |
+| `integer`    | `digit+`                         |
+| `float`      | `digit+ . digit*`                |
+| `relop`      | `< \| > \| <= \| >= \| == \| !=` |
+| `whitespace` | `(blank \| tab \| newline)+`     |
 
 These specifications are input to a lexer generator (Lex/Flex) which builds a transition table. Two conflict-resolution rules apply:
 
@@ -1000,13 +1000,13 @@ The lexical analyser (scanner) is the first phase of compilation. It reads the s
 
 **Key responsibilities:**
 
-|Function|Description|
-|---|---|
-|Tokenization|Group characters into tokens (id, num, keyword, operator, delimiter)|
-|Whitespace removal|Discard spaces, tabs, newlines not inside tokens|
-|Comment stripping|Skip `// ...` and `/* ... */` blocks|
-|Error detection|Report illegal characters (e.g., `@` in C source)|
-|Symbol table update|Insert new identifiers; return a pointer to the entry|
+| Function            | Description                                                          |
+| ------------------- | -------------------------------------------------------------------- |
+| Tokenization        | Group characters into tokens (id, num, keyword, operator, delimiter) |
+| Whitespace removal  | Discard spaces, tabs, newlines not inside tokens                     |
+| Comment stripping   | Skip `// ...` and `/* ... */` blocks                                 |
+| Error detection     | Report illegal characters (e.g., `@` in C source)                    |
+| Symbol table update | Insert new identifiers; return a pointer to the entry                |
 
 **Interaction model with the parser (demand-driven):**
 
@@ -1090,17 +1090,17 @@ A -> ab | a
 
 **Call tree and backtracking trace:**
 
-|Step|Input ptr|Current call|Action|
-|---|---|---|---|
-|1|`cad`|`parseS()`|Try S -> cAd|
-|2|`ad`|`parseS()`|Match `c` - success; call `parseA()`|
-|3|`ad`|`parseA()`|Save position; try A -> ab|
-|4|`d`|`parseA()`|Match `a` - success; try to match `b`|
-|5|`d`|`parseA()`|`b` expected, `d` found - **FAIL**|
-|6|`ad`|`parseA()`|**Backtrack** input to saved position; try A -> a|
-|7|`d`|`parseA()`|Match `a` - success; return to `parseS()`|
-|8|-|`parseS()`|Try to match `d` - success|
-|9|(empty)|`parseS()`|**Accept**|
+| Step | Input ptr | Current call | Action                                            |
+| ---- | --------- | ------------ | ------------------------------------------------- |
+| 1    | `cad`     | `parseS()`   | Try S -> cAd                                      |
+| 2    | `ad`      | `parseS()`   | Match `c` - success; call `parseA()`              |
+| 3    | `ad`      | `parseA()`   | Save position; try A -> ab                        |
+| 4    | `d`       | `parseA()`   | Match `a` - success; try to match `b`             |
+| 5    | `d`       | `parseA()`   | `b` expected, `d` found - **FAIL**                |
+| 6    | `ad`      | `parseA()`   | **Backtrack** input to saved position; try A -> a |
+| 7    | `d`       | `parseA()`   | Match `a` - success; return to `parseS()`         |
+| 8    | -         | `parseS()`   | Try to match `d` - success                        |
+| 9    | (empty)   | `parseS()`   | **Accept**                                        |
 
 ##### Pseudocode
 
